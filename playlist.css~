@@ -1,0 +1,8 @@
+/* CSS declarations go here */
+body {
+	padding: 6em;
+}
+
+h1 {
+	text-align: center;
+}

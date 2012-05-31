@@ -1,0 +1,62 @@
+Songs = new Meteor.Collection("songs");
+
+if (Meteor.is_client) {
+	
+	Template.playlist.songs = function () {		
+		return Songs.find();
+	};
+	
+	Template.navbar.events = {
+		'click div#addSong': function () {
+			Songs.insert({
+					title: "Click to edit title"
+				, lyrics: "Click to edit lyrics"
+			});
+		}
+	};
+	
+	Template.song.events = {
+		'click': function () {
+			var $song = $("div#"+this._id);
+			$song
+				.find("div.edit, h2")
+				.hallo();
+		},
+		'click button#save': function () {
+			var $song = $("div#"+this._id);
+			Songs.update({_id: this._id}, 
+				{$set: {
+						title: $song.find("h1").html()
+					, lyrics: $song.find(".edit").html()
+				}}
+			);
+		},
+		'click button#del': function () {
+			Songs.remove({_id: this._id});
+		}
+	};
+
+};
+
+if (Meteor.is_server) {
+  
+	Meteor.startup(function () {
+    if (Songs.find().count() === 0) {
+			Songs.insert({
+				title: "Curbside Prophet"
+				, lyrics: "I'm a curbside prophet <br> \
+								with my hand in my pocket <br> \
+								and I'm waiting for <br> \
+								my rocket to come."
+			});
+			Songs.insert({
+				title: "Let it Be"
+				, lyrics: "When I find myself in times of trouble <br> \
+							Mother Mary calls to me, <br> \
+							Speaking words of wisdom<br> \
+							Let it be."
+			});
+		}
+	});
+
+};

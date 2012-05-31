@@ -1,0 +1,42 @@
+<head>
+  <title>playlist</title>
+  
+  <script src="ui.js"></script>
+	<script src="hallo.js"></script>
+
+</head>
+
+<body>
+	{{> navbar}}
+	{{> playlist}}
+</body>
+
+<template name="navbar">
+	<div class="navbar">
+		<div class="navbar-inner">
+		  <div class="container">
+		    <div class="brand">Songs</div>
+		   	<div id="addSong" class="btn btn-warning">
+					<i class="icon-music"/>Add Song
+				</div>
+		  </div>
+		</div>
+	</div>
+</template>
+
+<template name="playlist">
+	<div class="row-fluid">
+	{{#each songs}}
+		{{> song}}
+	{{/each}}
+	</div>
+</template>
+
+<template name="song">
+	<div class="drawer span4" id="{{_id}}">
+		<h2>{{title}}</h2>
+		<div class="edit">{{{lyrics}}}</div>
+		<button id="save" class="btn btn-mini btn-warning">Save</button>
+		<button id="del" class="btn btn-mini">Delete</button>
+	</div>
+</template>
